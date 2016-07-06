@@ -1,0 +1,273 @@
+/* Table of contents
+––––––––––––––––––––––––––––––––––––––––––––––––––
+0.0 Normalize
+1.0 General
+*/
+
+/* 0.0 Normalize
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+html {
+  font-family: 'PT serif', 'Times New Roman', serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-width: 20em;
+  color: #222;
+}
+
+article,
+footer,
+header,
+main, {
+  display: block;
+}
+
+a {
+  background-color: transparent;
+  -webkit-text-decoration-skip: objects;
+}
+
+a:active,
+a:hover {
+  outline-width: 0;
+}
+
+h1 {
+  margin: 0;
+}
+
+img {
+  border-style: none;
+}
+
+/* 1.0 General
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+@custom-media --small-viewport (width <= 25em);
+@custom-media --medium-viewport (width > 25em) and (width <= 60em);
+@custom-media --big-viewport (width > 60em);
+
+.container {
+  position: relative;
+  padding: 0 40px;
+  max-width: 920px;
+  margin: 8vh auto 10vh;
+  zoom: 1;
+
+  &::after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+
+  & h3 {
+    font-size: 2em;
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+  & p {
+    font-size: 1.2em;
+    display: block;
+  }
+
+  @media (--small-viewport) {
+    padding: 8vh 5% 10vh;
+  }
+}
+
+.title {
+  text-align: center;
+  vertical-align: middle;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+}
+
+h1.title {
+  font-size: responsive 2.5em 4em;
+  font-range: 30em 80em;
+  margin-top: -1em;
+}
+
+h2.title {
+  font-size: responsive 2em 3em;
+  font-range: 30em 80em;
+  text-align: center;
+  max-width: 17em;
+}
+
+.subtitle {
+  font-size: responsive 0.85em 1.125em;
+  font-range: 30em 80em;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.resume {
+  position: absolute;
+  text-align: center;
+  bottom: 2em;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 999;
+
+  & p {
+    margin: 0.5em;
+  }
+
+  & a {
+    color: inherit;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  @media (--small-viewport) {
+    font-size: 0.8em;
+  }
+}
+
+.preview {
+  position: relative;
+  background: #333;
+  color: #fff;
+  overflow: hidden;
+
+  & picture {
+    pointer-events: none;
+
+    & source,
+    & img {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      overflow: hidden;
+      size: 100% auto;
+    }
+  }
+
+  & .preview-content {
+    box-shadow: 1000px 1000px 100px rgba(0, 0, 0, 0.35) inset;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    position: relative;
+    size: 100% 80vh;
+  }
+}
+
+@media (--big-viewport) {
+  .article {
+    & p {
+      max-width: 55%;
+    }
+
+    & p:first-child {
+      margin: 0;
+    }
+  }
+
+  .quote-start,
+  .quote-end {
+    padding-left: 1em;
+    float: right;
+    max-width: 35%;
+    margin: 0;
+  }
+
+  .quote-end {
+    position: absolute;
+    right: 0;
+    bottom: 1em;
+  }
+}
+
+.quote-main {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.quote-main,
+.quote-secondary {
+  border-left: 3px solid #f0efeb;
+
+  @media (--small-viewport) {
+    padding-left: 1em;
+  }
+}
+
+@media (--medium-viewport) {
+  .quote-start {
+    margin-bottom: 5vh;
+  }
+}
+
+@media (--medium-viewport) {
+  .quote-main,
+  .quote-secondary {
+    margin: 0 10%;
+    padding: 0 1em;
+  }
+
+  .article {
+    padding: 5% 0;
+  }
+}
+
+.capital {
+  &::first-letter {
+    font-size: 3.2em;
+    line-height: 0;
+  }
+}
+
+.full-width-img img,
+.full-width-img source {
+  size: 100% 100vh;
+  pointer-events: none;
+}
+
+.article-img {
+  display: block;
+  margin: 0 auto 1.5em;
+  max-width: 80%;
+}
+
+@media (--big-viewport) {
+  .article-img-text {
+    float: left;
+    max-width: 55%;
+    & p {
+      max-width: 100%;
+    }
+  }
+
+  .article-img {
+    display: block;
+    max-width: 35%;
+    float: right;
+    right: 0;
+    top: 0;
+  }
+}
+
+@media (--small-viewport) {
+  .quote-start,
+  .quote-end {
+    margin: 0 5%;
+  }
+
+  .quoter-start {
+    margin-bottom: 2em;
+  }
+}

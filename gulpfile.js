@@ -2,10 +2,14 @@
 
 const browserSync = require('browser-sync').create();
 const cssMqpacker = require('css-mqpacker');
+const cssNano = require('cssnano');
 const cssNext = require('postcss-cssnext');
+const ejs = require('gulp-ejs');
 const gulp = require('gulp');
 const imageOp = require('gulp-image-optimization');
 const postcss = require('gulp-postcss');
+const responsive = require('gulp-responsive');
+const responsiveType = require('postcss-responsive-type');
 const pug = require('gulp-pug');
 const size = require('postcss-size');
 
@@ -22,7 +26,6 @@ gulp.task('build', () => {
   gulp.run('pug', 'postcss', 'images', 'move');
 });
 
-
 // Pug
 
 gulp.task('pug', () => {
@@ -38,11 +41,13 @@ gulp.task('pug', () => {
 
 gulp.task('postcss', () => {
   const processors = [
+    responsiveType,
     size,
-    cssNext({
+    cssNext,
+    cssMqpacker,
+    cssNano({
       autoprefixer: ['ie >= 10', '> 2% in RU']
     }),
-    cssMqpacker,
   ];
   return gulp.src('src/postcss/style.css')
     .pipe(postcss(processors))
@@ -54,23 +59,38 @@ gulp.task('postcss', () => {
 
 gulp.task('images', (cb) => {
   gulp.src(['src/images/**/*'])
+  .pipe(responsive({
+    '*.*':[
+      {
+        width: 400,
+        height: 568,
+        crop: 'center',
+        rename: ({
+          suffix: '-sm'
+        })
+      },{
+        width: 960,
+        height: 1000,
+        crop: 'center',
+        rename: ({
+          suffix: '-md'
+        }),
+      }, {
+        width: 1680,
+        height: 1120,
+        crop: 'center',
+      },
+    ]},
+    {
+      errorOnEnlargement: false
+    }
+  ))
   .pipe(imageOp({
     optimizationLevel: 5,
     progressive: true,
     interlaced: true
   }))
   .pipe(gulp.dest('dist/images')).on('end', cb).on('error', cb);
-});
-
-// Moving
-
-gulp.task('move', () => {
-  const filesToMove = [
-    './src/fonts/**/*.*',
-    './src/favicon.ico'
-  ];
-  gulp.src(filesToMove, { base: './src/' })
-  .pipe(gulp.dest('./dist/'));
 });
 
 // Server
@@ -80,6 +100,6 @@ gulp.task('server', () => {
     server: {
       baseDir: './dist/'
     },
-    open: false
+    open: true
   });
 });

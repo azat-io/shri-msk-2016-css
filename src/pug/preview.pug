@@ -1,0 +1,9 @@
+mixin preview(imageName, title)
+  .preview
+    picture
+      source(srcset='images/' + imageName + '-sm.jpeg' media='(max-width: 25em)')
+      source(srcset='images/' + imageName + '-md.jpeg' media='(min-width: 25.1em) and (max-width: 60em)')
+      source(srcset='images/' + imageName + '.jpeg')
+      img(srcset='images/' + imageName + '.jpeg' alt='')
+    .preview-content
+      h2.title= title
