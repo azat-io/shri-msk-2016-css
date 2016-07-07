@@ -170,6 +170,7 @@ h2.title {
   .article {
     & p {
       max-width: 55%;
+      text-align: justify;
     }
 
     & p:first-child {
@@ -179,6 +180,7 @@ h2.title {
 
   .quote-start,
   .quote-end {
+    text-align: justify;
     padding-left: 1em;
     float: right;
     max-width: 35%;
